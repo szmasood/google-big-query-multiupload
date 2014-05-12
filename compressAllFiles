@@ -1,0 +1,3 @@
+# gzips all files specified by the first parameter for upload to Google Cloud Storage
+
+find $1 -type f ! -name '*.gz' -exec gzip "{}" \;
