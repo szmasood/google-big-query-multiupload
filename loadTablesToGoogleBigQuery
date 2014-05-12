@@ -21,21 +21,12 @@ loadToBQ () {
   tableName=${1%.gz}
   tableBaseName=${tableName#*/}
   tableUID="${3}.${tableBaseName}" 
-<<<<<<< HEAD
   cloudSource="${2}/${tableBaseName}.gz" 
   bq load --source_format=NEWLINE_DELIMITED_JSON $tableUID $cloudSource googleAnalyticsPremiumSchema.json
 }
 
-# Upload compressed tables to Cloud Storage and then load to BQ for each file in the directory
+# Upload compress tables to Cloud Storage and then load to BQ for each file in the directory
 sh ./compressAllFiles $1
-=======
-  cloudSource="${2}/${tableBaseName}.gz"
-  echo $cloudSource 
-  bq load --source_format=NEWLINE_DELIMITED_JSON $tableUID $cloudSource googleAnalyticsPremiumSchema.json
-}
-
-# Upload to Cloud Storage and then load to BQ for each file in the directory
->>>>>>> a0df7d246af32920e11fd5bb473e864c947879ff
 if [[ -d $1 ]] ; then
   FILES="$1"/*
   for file in $FILES
