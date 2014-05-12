@@ -1,0 +1,39 @@
+#!/bin/bash
+# Author: Shayan Masood
+# Uploads all Google Analytics Premium tables from specified directory to Google Cloud Storage
+# Then loads from Cloud Storage to Google BigQuery
+# ./loadTablesToBQ <source directory> <googlecloudstorage bucket> <bigqueyr destinationUID>
+
+# Check if three parameters
+if [ $# -ne 3 ] ; then
+  echo "Usage: $0 <source dir> <google cloud storage dir> <bq destination dataset UID>"
+  exit
+fi
+
+
+# Upload table to Google Cloud Storage using gsutil
+uploadToCloudStorage() {
+  gsutil cp $1 $2
+}
+
+# Load table from Cloud Storage to Google BigQuery
+loadToBQ () {
+  tableName=${1%.gz}
+  tableBaseName=${tableName#*/}
+  tableUID="${3}.${tableBaseName}" 
+  cloudSource="${2}/${tableBaseName}.gz"
+  echo $cloudSource 
+  bq load --source_format=NEWLINE_DELIMITED_JSON $tableUID $cloudSource googleAnalyticsPremiumSchema.json
+}
+
+# Upload to Cloud Storage and then load to BQ for each file in the directory
+if [[ -d $1 ]] ; then
+  FILES="$1"/*
+  for file in $FILES
+  do
+      if [[ $file =~ ga_sessions_[0-9]{8}.*$ ]] ; then
+	uploadToCloudStorage $file $2
+	loadToBQ $file $2 $3
+      fi
+  done
+fi
