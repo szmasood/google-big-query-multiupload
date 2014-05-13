@@ -31,9 +31,15 @@ if [[ -d $1 ]] ; then
   FILES="$1"/*
   for file in $FILES
   do
-      if [[ $file =~ ga_sessions_[0-9]{8}.*$ ]] ; then
+      if [[ $file =~ ga_sessions_[0-9]{8}.gz$ ]] ; then
 	uploadToCloudStorage $file $2
-	loadToBQ $file $2 $3
+	loadToBQ $file $2 $3 | grep 'DONE' &> /dev/null
+        if [ $? == 0 ]; then
+          rm "$file"
+          gsutil rm "$2/$(basename $file)"
+        else
+          exit
+        fi 
       fi
   done
 fi
