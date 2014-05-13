@@ -17,5 +17,5 @@ Uploads all Google Analytics Premium tables specfied by a directory to Google Cl
 5. Google BigQuery Destination DataSet must exit and follow format: <projectId>:<dataSetId>
 ```
 
-`Tested with BigQuery CLI 2.0.19, gsutil version 3.42`
+`Tested with BigQuery CLI 2.0.19 | gsutil version 3.42`
 
