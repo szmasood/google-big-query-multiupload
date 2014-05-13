@@ -14,7 +14,7 @@ Uploads all Google Analytics Premium tables specfied by a directory to Google Cl
 2. gsutil must be previously installed 
 3. Google Analytics Premium tables follow format: ga_sessions_yyyymmdd
 4. Google Cloud Storage Bucket must exist and follow format: gs://<mybucket>
-5. Google BigQuery Destination DataSet must exit and follow format: <projectId>:<dataSetId>
+5. Google BigQuery Destination DataSet must exist and follow format: <projectId>:<dataSetId>
 ```
 
 `Tested with BigQuery CLI 2.0.19 | gsutil version 3.42`
