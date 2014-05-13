@@ -2,7 +2,7 @@
 # Author: Shayan Masood
 # Uploads all Google Analytics Premium tables from specified directory to Google Cloud Storage
 # Then loads from Cloud Storage to Google BigQuery
-# ./loadTablesToBQ <source directory> <googlecloudstorage bucket> <bigqueyr destinationUID>
+# ./loadTablesToBQ <source directory> <googlecloudstorage bucket> <bigquery destinationUID>
 
 # Check if three parameters
 if [ $# -ne 3 ] ; then
